@@ -88,6 +88,11 @@ fi
 
 while [ ! -f /var/state/ntp_ok ]; do
   sleep 1
+  display "   Retrying NTP"
+  ntpd -n -q -p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org
+  if [ $? == 0 ]; then
+    touch /var/state/ntp_ok
+  fi
 done
 
 display "   Present Key"
